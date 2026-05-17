@@ -114,6 +114,11 @@ tr.done-row .cell-title { text-decoration: line-through; }
 }
 .date-input:focus { border-color: #58A9D7; }
 
+/* 컬럼 폭 — 데스크탑 */
+.col-task  { width: 55%; }
+.col-check { width: 12%; }
+.col-date  { width: 33%; }
+
 /* 이모지 아이콘 */
 .icon { margin-right: 0.4em; }
 
@@ -126,77 +131,40 @@ tr.done-row .cell-title { text-decoration: line-through; }
 }
 
 /* ════════════════════════════════
-   모바일 — 카드형 레이아웃
+   모바일 — 압축 테이블
    ════════════════════════════════ */
-@media (max-width: 600px) {
-  body { padding: 1.2em 1em 4em; }
+@media (max-width: 640px) {
+  body { padding: 0.8em 0.4em 3em; }
 
-  .collection-content-wrapper { overflow-x: visible; }
+  .page-title { font-size: 1.3rem; }
+  .page-description { font-size: 0.72rem; }
 
-  /* 테이블 → 블록 변환 */
-  table, tbody { display: block; width: 100%; }
-  thead { display: none; }
-
-  /* 월 구분 행 */
-  tr.month-group { display: block; width: 100%; }
-  tr.month-group td {
-    display: block;
+  table {
+    font-size: 0.7rem;
+    table-layout: fixed;
     width: 100%;
-    border-left: none;
-    border-right: none;
-    padding: 0.5em 0.2em;
   }
 
-  /* 일반 행 → 카드 */
-  tbody tr:not(.month-group) {
-    display: grid;
-    grid-template-columns: 32px 1fr;
-    grid-template-rows: auto auto;
-    column-gap: 10px;
-    row-gap: 2px;
-    padding: 10px 4px;
-    border-bottom: 1px solid rgba(55,53,47,0.08);
-    border-left: none;
-    border-right: none;
-    border-top: none;
-  }
-  tbody tr:not(.month-group) td { border: none; padding: 0; }
+  /* 컬럼 폭 고정 — 할 일이 남은 공간 모두 차지 */
+  th:nth-child(1), td:nth-child(1) { width: auto; }
+  th:nth-child(2), td:nth-child(2) { width: 30px; text-align: center; }
+  th:nth-child(3), td:nth-child(3) { width: 82px; }
 
-  /* 체크박스 셀 — 왼쪽 열, 두 행에 걸쳐 중앙 정렬 */
-  tbody tr:not(.month-group) td:nth-child(2) {
-    grid-column: 1;
-    grid-row: 1 / 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  th, td { padding: 0.28em 0.22em; line-height: 1.3; }
 
-  /* 할 일 셀 */
-  tbody tr:not(.month-group) td:nth-child(1) {
-    grid-column: 2;
-    grid-row: 1;
-    font-size: 0.95rem;
-    line-height: 1.4;
-  }
+  .month-group td { font-size: 0.66rem; padding: 0.32em 0.22em; }
 
-  /* 날짜 셀 */
-  tbody tr:not(.month-group) td:nth-child(3) {
-    grid-column: 2;
-    grid-row: 2;
-  }
+  /* 할 일 텍스트 줄바꿈 허용 */
+  .cell-title { word-break: keep-all; overflow-wrap: break-word; }
 
-  /* 모바일용 체크박스 크기 */
-  .checkbox { width: 22px; height: 22px; background-size: 22px; }
+  /* 체크박스 */
+  .checkbox { width: 15px; height: 15px; background-size: 15px; }
 
-  /* 날짜 표시 */
-  .date-display { font-size: 0.78rem; color: rgba(55,53,47,0.45); padding: 1px 4px; }
-  .date-display.empty::before { font-size: 0.75rem; }
-
-  /* 날짜 입력창 — 모바일 키보드 최적화 */
-  .date-input { font-size: 16px; /* iOS 줌 방지 */ padding: 6px 8px; }
-
-  /* 완료 행 */
-  tr.done-row .cell-title { text-decoration: line-through; }
+  /* 날짜 */
+  .date-cell { min-width: unset; }
+  .date-display { font-size: 0.65rem; padding: 1px 3px; min-width: unset; }
+  .date-display.empty::before { font-size: 0.62rem; }
+  .date-input { font-size: 16px; padding: 4px 6px; } /* iOS 줌 방지 */
 }
 
 @media print { .footer { display: none; } }
@@ -213,9 +181,9 @@ tr.done-row .cell-title { text-decoration: line-through; }
   <div class="collection-content-wrapper">
     <table class="collection-content">
       <colgroup>
-        <col style="width:55%"/>
-        <col style="width:12%"/>
-        <col style="width:33%"/>
+        <col class="col-task"/>
+        <col class="col-check"/>
+        <col class="col-date"/>
       </colgroup>
       <thead>
         <tr>
